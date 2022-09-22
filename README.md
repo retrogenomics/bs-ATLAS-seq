@@ -26,7 +26,7 @@ unzip main.zip
 mv bs-ATLAS-seq-main/ bs/
 ```
 2. Download a human reference genome (e.g. hg38):
-````
+```
 mkdir -p bs/references/hg38
 wget 'ftp://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz' -O bs/references/hg38/hg38.fa.gz
 gunzip bs/references/hg38/hg38.fa.gz
@@ -45,6 +45,6 @@ bismark_genome_preparation --verbose bs/references/hg38/
 <DOWNLOAD>/bs/scripts/bs-atlas-seq_calling.sh \
    -1 Sample1_R1.fastq.gz \
    -2 Sample2_R2.fastq.gz \
-   -o <OUTPUT_DIRECTORY> \
-   -p "${k}" -n 10 -s 2 -t 12
+   -o ./results \
+   -p Sample1 -n 10 -s 2 -t 8
 ```
