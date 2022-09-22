@@ -5,7 +5,7 @@ Script to call L1 insertions and their methylation levels in bs-ATLAS-seq experi
 ## Installation
 ### Dependencies
 - [cutadapt](https://github.com/marcelm/cutadapt) (tested with v3.1)
-- [bowtie2](https://github.com/lh3/bw](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) (tested with v2.4.1)
+- [bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) (tested with v2.4.1)
 - [bismark](https://github.com/FelixKrueger/Bismark) (version >= 0.22.0 which supports soft-clipping, tested with v0.22.1)
 - [samtools](http://www.htslib.org) (tested with v1.3)
 - [Picard tools](http://broadinstitute.github.io/picard/) (tested with v2.19)
