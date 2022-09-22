@@ -13,22 +13,11 @@
 #   - bedtools 2.29.2
 #   - methpat 2.1.0 (python 2.7)
 #   - seqtk 1.3-r115-dirty
-#		- GNU parallel 20200922
-
-# update -----------------------------------------------------------------------
-# 1.1.0: 	- introduction of a filtering step to eliminate polymorphic L1 insertions
-# 				corresponding to old L1, i.e. chimeric pairs of reads, based on number
-# 				of edits calculated with cutadapt and a consensus with C replaced by Y
-# 				due to potential bisulfite action.
-#					- blacklist changed to more recent hg38_unified_blacklist
-#					- filter out insertions found in chr_unk
-#         - fix a bug introduced following an update of seqtk that modified how
-#           read names in fastq files are processed by seqtk subseq
-
+#   - GNU parallel 20200922
 
 ###### load preferences and define global settings #############################
 script_name="bs-atlas-seq_calling"
-script_version='1.1.0'
+script_version='1.2.0'
 
 start_time=$( date +%s )
 day=$(date +"[%d-%m-%Y] [%T]")
@@ -40,7 +29,6 @@ export LC_NUMERIC="en_US.UTF-8"
 
 shopt -s extglob
 
-
 ###### script argument parsing and processing ##################################
 
 # set defaults argument values -------------------------------------------------
@@ -51,6 +39,7 @@ read_threshold=3
 splitread_threshold=2
 output_dir="$( pwd )"
 cleanup="off"
+config_file="./config_dir.sh"
 
 # store usage explanations -----------------------------------------------------
 USAGE="\
@@ -65,10 +54,11 @@ options:\n\
 \t-u Subsampling of input fastq file (no=1; or indicate fraction of reads to consider, e.g. 0.01) [default=$subsampling] \n\
 \t-t Number of threads used for mapping [default=$threads]\n\
 \t-c Activate cleanup (deletion of temporary files) [default=off]\n\
+\t-d Configuration file [default=${config_dir}\n\
 "
 
 # parse script arguments -------------------------------------------------------
-while getopts ':hcv1:2:p:o:t:s:n:u:' opt ; do
+while getopts ':hcv1:2:p:o:t:s:n:u:d:' opt ; do
 	case $opt in
     1) input_file_R1=$OPTARG ;;
     2) input_file_R2=$OPTARG ;;
@@ -78,6 +68,7 @@ while getopts ':hcv1:2:p:o:t:s:n:u:' opt ; do
     p) prefix=$OPTARG ;;
 		t) threads=$OPTARG ;;
 		u) subsampling=$OPTARG ;;
+		d) config_dir=$OPTARG ;;
 		c) cleanup="on" ;;
 		h) echo -e "\n$USAGE"; exit 1 ;;
 		v) echo -e "${script_name} v${script_version}" ; exit 1 ;;
@@ -114,25 +105,21 @@ else
 fi
 
 # define environmental variables and paths -------------------------------------
-path_to_bioinfo="${HOME}/Lab/bioinfo"
-path_to_bwt2="/opt/local/bin"
-picard="/usr/local/picard/picard.jar"
-
-path_to_reference="${path_to_bioinfo}/references/human/hg38"
-path_to_L1HS="${path_to_bioinfo}/references/L1/bismark-bwt2"
-
-reference="hg38"
-rmsk="${path_to_bioinfo}/annotations/hg38/hg38_rmsk_L1_repPercent.bed"
-genes="${path_to_bioinfo}/annotations/hg38/hg38_NCBIRefSeq_refGene.bed"
-blacklist="${path_to_bioinfo}/annotations/hg38/hg38.encode4_unified_blacklist.ENCFF356LFX.bed"
+if [[ -z "${config_file}" || ! -f "${config_file}" || ! -s "${config_file}" ]];
+then
+	echo -e "\nConfiguration file not specified, not existing or empty.\n";
+	echo -e "${USAGE}" ; exit 1
+else
+	source "${config_file}"
+	echo -e "\nConfiguration loaded from: ${config_file}.\n";
+fi
 wd="${output_dir}/temp"
-
 mkdir -p "${output_dir}" "${wd}"
 
 # print header
 output="\n\
 ${starline}\n\
-$day BS-ATLAS-seq analysis - Script v$script_version \n\
+$day bs-ATLAS-seq analysis - Script v$script_version \n\
 $starline\n\
 Command line:\n$( basename $0 ) $@ \n\
 ${starline}\n\
