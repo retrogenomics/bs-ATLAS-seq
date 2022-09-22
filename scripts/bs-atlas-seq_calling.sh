@@ -54,7 +54,7 @@ options:\n\
 \t-u Subsampling of input fastq file (no=1; or indicate fraction of reads to consider, e.g. 0.01) [default=$subsampling] \n\
 \t-t Number of threads used for mapping [default=$threads]\n\
 \t-c Activate cleanup (deletion of temporary files) [default=off]\n\
-\t-d Configuration file [default=${config_file}\n\
+\t-d Configuration file [default=${config_file}]\n\
 "
 
 # parse script arguments -------------------------------------------------------
