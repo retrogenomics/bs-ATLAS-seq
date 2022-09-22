@@ -40,11 +40,16 @@ bismark_genome_preparation --verbose bs/references/hg38/
 4. Edit the `config_dir.sh` file in the `bs-ATLAS-seq/` folder according to your configuration
 
 ## How to use?
-### To process sequencing data and get L1 insertions
-```bash
-<DOWNLOAD>/bs/scripts/bs-atlas-seq_calling.sh \
-   -1 Sample1_R1.fastq.gz \
-   -2 Sample2_R2.fastq.gz \
-   -o ./results \
-   -p Sample1 -n 10 -s 2 -t 8
+```
+usage:	bs-atlas-seq_calling.sh [options] -1 read1.fastq.gz -2 read2.fastq.gz -p prefix
+options:
+	-h Print this help menu.
+	-v What version of bs-atlas-seq_calling are you using?
+	-o Output directory.
+	-n Total read number threshold to call an insertion [default=3]
+	-s Split read number threshold to call an insertion [default=2]
+	-u Subsampling of input fastq file (no=1; or indicate fraction of reads to consider, e.g. 0.01) [default=1]
+	-t Number of threads used for mapping [default=4]
+	-c Activate cleanup (deletion of temporary files) [default=off]
+	-d Configuration file [default=./config_dir.sh]
 ```
