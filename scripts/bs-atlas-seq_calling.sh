@@ -60,15 +60,15 @@ options:\n\
 # parse script arguments -------------------------------------------------------
 while getopts ':hcv1:2:p:o:t:s:n:u:d:' opt ; do
 	case $opt in
-    1) input_file_R1=$OPTARG ;;
-    2) input_file_R2=$OPTARG ;;
-    o) output_dir=$OPTARG ;;
+    		1) input_file_R1=$OPTARG ;;
+    		2) input_file_R2=$OPTARG ;;
+    		o) output_dir=$OPTARG ;;
 		n) read_threshold=$OPTARG ;;
 		s) splitread_threshold=$OPTARG ;;
-    p) prefix=$OPTARG ;;
+		p) prefix=$OPTARG ;;
 		t) threads=$OPTARG ;;
 		u) subsampling=$OPTARG ;;
-		d) config_dir=$OPTARG ;;
+		d) config_file=$OPTARG ;;
 		c) cleanup="on" ;;
 		h) echo -e "\n$USAGE"; exit 1 ;;
 		v) echo -e "${script_name} v${script_version}" ; exit 1 ;;
