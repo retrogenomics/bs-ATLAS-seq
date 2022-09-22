@@ -14,25 +14,33 @@ Script to call L1 insertions and their methylation levels in bs-ATLAS-seq experi
 - [seqtk](https://github.com/lh3/seqtk) (tested with v1.3)
 - [GNU parallel](https://www.gnu.org/software/parallel/) (tested v20200922)
 
-### Other requirements
-- A human reference genome sequence (ex: [`hg38.fa`](https://hgdownload.soe.ucsc.edu/goldenPath/hg38/bigZips/))
-- and its bismark index (ex: `hg19.fa.amb, .ann, .bwt, .fai, .pac, .sa`)
+**Make sure these programs are included in your $PATH directory.**
 
 ### Procedure
+Note that `<PATH>` should be replaced by the name of the folder in which you have installed the `bs-ATLAS-seq/` folder.
 
-1. Download from GitHub:
+1. Download the whole project folder from GitHub:
 ```
 git clone https://github.com/retrogenomics/bs-ATLAS-seq.git
 ```
-2. Edit the `CONFIG` file in the `iss/scripts/` folder according to your configuration
-3. Edit the experiment configuration file (sequencing metadata) according to your sequencing data.
-   - This file is stored in the `iss/experiments/` folder and its name.
-   - Its location should be included in the `CONFIG`file as `EXP_CONFIG="${EXPERIMENTS}/<your file name>"`.
-   - `atlas-neo-R01-to-R09.txt` is the default example.
+2. Download a human reference genome (e.g. hg38):
+````
+wget --timestamping 'ftp://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz' -O <PATH>/bs-ATLAS-seq/references/hg38/hg38.fa.gz
+gunzip <PATH>/bs-ATLAS-seq/references/hg38/hg38.fa.gz
+```
+3. Prepare Bismark genomes and indexes:
+```
+bismark_genome_preparation --verbose <PATH>/bs-ATLAS-seq/references/hg38/
+bismark_genome_preparation --verbose <PATH>/bs-ATLAS-seq/references/L1/
+```
+4. Edit the `config_dir.sh` file in the `bs-ATLAS-seq/` folder according to your configuration
 
 ## How to use?
 ### To process sequencing data and get L1 insertions
 ```bash
-cd iss/scripts
-./atlas-neo_all_samples.sh
+<PATH>/bs-ATLAS-seq/scripts/bs-atlas-seq_calling.sh \
+   -1 Sample1_R1.fastq.gz \
+   -2 Sample2_R2.fastq.gz \
+   -o <OUTPUT_DIRECTORY> \
+   -p "${k}" -n 10 -s 2 -t 12
 ```
