@@ -98,7 +98,6 @@ The output directory will be `~/Downloads/test_220923` and output files will all
 ### example of output files
 - `.log` file
 ```
-### example of output files
 *********************************************************************************************************
 [23-09-2022] [15:07:57] bs-ATLAS-seq analysis - Script v1.2.0
 *********************************************************************************************************
