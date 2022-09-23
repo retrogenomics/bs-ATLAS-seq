@@ -107,7 +107,7 @@ fi
 # define environmental variables and paths -------------------------------------
 if [[ -z "${config_file}" || ! -f "${config_file}" || ! -s "${config_file}" ]];
 then
-	echo -e "\nConfiguration file not specified, not existing or empty.\n";
+	echo -e "\nConfiguration file *$( realpath ${config_file} )* not specified, not existing or empty.\n";
 	echo -e "${USAGE}" ; exit 1
 else
 	source "${config_file}"
