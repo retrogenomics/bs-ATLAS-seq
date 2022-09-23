@@ -2,6 +2,11 @@
 ## Background
 Script to call L1 insertions and their methylation levels in bs-ATLAS-seq experiments.
 
+## Citing bs-ATLAS-seq scripts
+If you use this script in your work, please cite:
+> Lanciano, S, *et al.* (2022). Resolving the heterogeneity of L1 DNA methylation reveals widespread epivariation and interplay between L1s and their integration site.
+> *bioRxiv*, 2022.XXX; [doi:XXX]
+
 ## Installation
 
 ### Dependencies
@@ -46,7 +51,7 @@ bismark_genome_preparation --verbose bs/references/hg38/
 6. Edit the `config_dir.sh` file in the `bs-ATLAS-seq/` folder according to your configuration
 
 ### Note
-We provide annotation files (genes, reference L1s, ENCODE black-list) for hg38. If you want to use another assembly, you can use the [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) tool to convert coordinates in your favorite assembly. 
+We provide annotation files (genes, reference L1s, ENCODE black-list) for hg38. If you want to use another assembly, you can use the [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) tool to convert coordinates in your favorite assembly.
 
 ## Usage
 ```
@@ -194,7 +199,7 @@ L1 with methylation call	3877
 |CG_count|total number of CpGs (both methylated and unmethylated)|
 |ME|an estimate of methylation entropy (see [Xie H. et al. Nucleic Acids Res 2011](https://doi.org/10.1093/nar/gkt209))|
 |closest_gene|name of the closest gene in a 10 kb-window (a dot if none)|
-	
+
 - `.L1HS.hg38.html` file (can be opened with a web browser)
 
 <img
