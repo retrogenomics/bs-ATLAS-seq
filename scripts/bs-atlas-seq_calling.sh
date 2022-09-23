@@ -231,7 +231,7 @@ echo -ne "${output}"
 bismark_genome_preparation \
   --bowtie2 \
   --path_to_aligner "${path_to_bwt2}" \
-  "${path_to_L1HS}" #&> /dev/null
+  "${path_to_L1HS}" &> /dev/null
 
 # map R2 mates to L1HS ---------------------------------------------------------
 bismark \
@@ -244,7 +244,7 @@ bismark \
   --local \
   --pbat \
   --multicore "${bs_parallel}" \
-	#&> /dev/null
+  &> /dev/null
 
 mv "${wd}/${prefix}_R2_bismark_bt2.bam" "${wd}/${prefix}.R2toL1HS.bam"
 mv "${wd}/${prefix}_R2.fastq.gz_unmapped_reads.fq.gz" "${wd}/${prefix}.R2toL1HS.unmapped.fastq.gz"
@@ -290,8 +290,8 @@ bismark \
   --path_to_bowtie2 "${path_to_bwt2}" \
   --minins 250 \
   --maxins 1250 \
-	--score_min L,-0.6,-0.6 \
-	--multicore "${bs_parallel}"	\
+  --score_min L,-0.6,-0.6 \
+  --multicore "${bs_parallel}"	\
   &> /dev/null
 
 mv "${wd}/${prefix}.L1HS-filtered.R1.fastq.gz_unmapped_reads_1.fq.gz" "${wd}/${prefix}.L1HS-filtered.unmapped_R1.fastq.gz"
@@ -316,9 +316,9 @@ java -Xmx8g -Dpicard.useLegacyParser=FALSE \
 	-jar ${picard} SortSam \
   --INPUT "${wd}/${prefix}.L1HS-filtered.PEto${reference}.bam" \
   --OUTPUT "${wd}/${prefix}.ref-L1.${reference}.bam" \
-	--VERBOSITY ERROR \
-	--QUIET TRUE \
-	--SORT_ORDER coordinate \
+  --VERBOSITY ERROR \
+  --QUIET TRUE \
+  --SORT_ORDER coordinate \
   --USE_JDK_DEFLATER TRUE \
   --USE_JDK_INFLATER TRUE \
   --CREATE_INDEX TRUE
@@ -425,14 +425,14 @@ bismark \
   --bowtie2 \
   --path_to_bowtie2 "${path_to_bwt2}" \
   --local \
-	--non_directional \
-	-L "${seed}" \
-	--score_min G,12,0.8 \
+  --non_directional \
+  -L "${seed}" \
+  --score_min G,12,0.8 \
   --multicore "${bs_parallel}" \
-	&> /dev/null
+  &> /dev/null
 
 mv "${wd}/${prefix}.split_reads_R1_bismark_bt2.bam" \
-	"${wd}/${prefix}.split_reads.R1toL1HS.bam"
+   "${wd}/${prefix}.split_reads.R1toL1HS.bam"
 
 # list split reads mapping both on ref genome and L1HS -------------------------
 samtools view -F 16 "${wd}/${prefix}.split_reads.R1toL1HS.bam" \
@@ -450,23 +450,23 @@ java -Xmx8g -Dpicard.useLegacyParser=FALSE \
 	--FILTER includeReadList \
 	--WRITE_READS_FILES FALSE \
 	--USE_JDK_DEFLATER TRUE \
-  --USE_JDK_INFLATER TRUE \
+  	--USE_JDK_INFLATER TRUE \
 	--SORT_ORDER coordinate \
 	--CREATE_INDEX TRUE
 
 # dedup split reads mapped on ref genome ---------------------------------------
 java -Xmx8g -Dpicard.useLegacyParser=FALSE \
 	-jar ${picard} MarkDuplicates \
-  --INPUT "${wd}/${prefix}.split_reads.R1to${reference}.bam" \
-  --OUTPUT "${wd}/${prefix}.split_reads.R1to${reference}.dedup.bam" \
+  	--INPUT "${wd}/${prefix}.split_reads.R1to${reference}.bam" \
+  	--OUTPUT "${wd}/${prefix}.split_reads.R1to${reference}.dedup.bam" \
 	--VERBOSITY ERROR \
 	--QUIET TRUE \
-  --METRICS_FILE "${wd}/${prefix}.split_reads.R1to${reference}.dedup.log" \
-  --REMOVE_DUPLICATES TRUE \
-  --ASSUME_SORT_ORDER coordinate \
-  --USE_JDK_DEFLATER TRUE \
-  --USE_JDK_INFLATER TRUE \
-  --DUPLICATE_SCORING_STRATEGY SUM_OF_BASE_QUALITIES \
+ 	--METRICS_FILE "${wd}/${prefix}.split_reads.R1to${reference}.dedup.log" \
+	--REMOVE_DUPLICATES TRUE \
+	--ASSUME_SORT_ORDER coordinate \
+	--USE_JDK_DEFLATER TRUE \
+	--USE_JDK_INFLATER TRUE \
+	--DUPLICATE_SCORING_STRATEGY SUM_OF_BASE_QUALITIES \
 	--CREATE_INDEX TRUE
 
 # cluster split reads mapped on ref genome -------------------------------------
@@ -503,16 +503,16 @@ seqtk subseq "${wd}/${prefix}_R2.fastq.gz" "${wd}/${prefix}.singletons.R1to${ref
 
 cutadapt \
   --cores="${threads}" \
-	--minimum-length=189 \
+  --minimum-length=189 \
   --overlap 100 \
-	--trim-n \
-	--action=none \
+  --trim-n \
+  --action=none \
   --discard-untrimmed \
-	--error-rate=0.045 \
+  --error-rate=0.045 \
   --quiet \
-	-a L1_target="AAAAACTCCCTAACCCCTTACRCTTCCCARRTRARRCAATRCCTCRCCCTRCTTCRRCTCRCRCACRRTRCRCACACACACTRRCCTRCRCCCACTRTCTRRCACTCCCTARTRARATRAACCC" \
-	-o "${wd}/${prefix}.discordant_R2_HQ.fastq.gz" \
-	"${wd}/${prefix}.discordant_R2.fastq.gz"
+  -a L1_target="AAAAACTCCCTAACCCCTTACRCTTCCCARRTRARRCAATRCCTCRCCCTRCTTCRRCTCRCRCACRRTRCRCACACACACTRRCCTRCRCCCACTRTCTRRCACTCCCTARTRARATRAACCC" \
+  -o "${wd}/${prefix}.discordant_R2_HQ.fastq.gz" \
+  "${wd}/${prefix}.discordant_R2.fastq.gz"
 
 # extract read names for discordant HQ R2 reads
 zcat "${wd}/${prefix}.discordant_R2_HQ.fastq.gz" \
@@ -530,21 +530,21 @@ java -Xmx8g -Dpicard.useLegacyParser=FALSE \
 	--FILTER includeReadList \
 	--WRITE_READS_FILES FALSE \
 	--USE_JDK_DEFLATER TRUE \
-  --USE_JDK_INFLATER TRUE \
+	--USE_JDK_INFLATER TRUE \
 	--SORT_ORDER coordinate \
 	--CREATE_INDEX TRUE
 
 # transform HQ R2 fastq into unmapped bam file ------------------------------------
-	java -Xmx8g -Dpicard.useLegacyParser=FALSE \
+java -Xmx8g -Dpicard.useLegacyParser=FALSE \
 	-jar ${picard} FastqToSam \
-  -FASTQ "${wd}/${prefix}.discordant_R2_HQ.fastq.gz" \
-  --OUTPUT "${wd}/${prefix}.discordant_R2_HQ.bam" \
+	-FASTQ "${wd}/${prefix}.discordant_R2_HQ.fastq.gz" \
+	--OUTPUT "${wd}/${prefix}.discordant_R2_HQ.bam" \
 	--VERBOSITY ERROR \
 	--QUIET TRUE \
-  --SAMPLE_NAME "${wd}/${prefix}.discordant_R2_HQ.bam" \
-  --USE_JDK_DEFLATER TRUE \
-  --USE_JDK_INFLATER TRUE \
-  --SORT_ORDER queryname
+	--SAMPLE_NAME "${wd}/${prefix}.discordant_R2_HQ.bam" \
+	--USE_JDK_DEFLATER TRUE \
+	--USE_JDK_INFLATER TRUE \
+	--SORT_ORDER queryname
 
 # merge HQ R1 and R2 bam files for discordant PE ----------------------------------
 samtools merge - \
@@ -603,40 +603,40 @@ cat "${wd}/header.txt" "${wd}/${prefix}.discordant_PE.${reference}.sam" \
 # merge ref and non-ref bs-atlas-seq reads in bam file -------------------------
 java -Xmx8g -Dpicard.useLegacyParser=FALSE \
 	-jar ${picard} MergeSamFiles \
-  --INPUT "${wd}/${prefix}.ref-L1.${reference}.bam" \
-  --INPUT "${wd}/${prefix}.discordant_PE.${reference}.bam" \
-  --OUTPUT "${wd}/${prefix}.merged.bam" \
+	--INPUT "${wd}/${prefix}.ref-L1.${reference}.bam" \
+	--INPUT "${wd}/${prefix}.discordant_PE.${reference}.bam" \
+	--OUTPUT "${wd}/${prefix}.merged.bam" \
 	--VERBOSITY ERROR \
 	--QUIET TRUE \
-  --USE_JDK_DEFLATER TRUE \
-  --USE_JDK_INFLATER TRUE \
-  --SORT_ORDER queryname
+	--USE_JDK_DEFLATER TRUE \
+	--USE_JDK_INFLATER TRUE \
+	--SORT_ORDER queryname
 
 # remove duplicate reads in merged file ----------------------------------------
 java -Xmx8g -Dpicard.useLegacyParser=FALSE \
 	-jar ${picard} MarkDuplicates \
-  --INPUT "${wd}/${prefix}.merged.bam" \
-  --OUTPUT "${wd}/${prefix}.merged.dedup.bam" \
+	--INPUT "${wd}/${prefix}.merged.bam" \
+	--OUTPUT "${wd}/${prefix}.merged.dedup.bam" \
 	--VERBOSITY ERROR \
 	--QUIET TRUE \
-  --METRICS_FILE "${wd}/${prefix}.merged.dedup.log" \
-  --REMOVE_DUPLICATES TRUE \
-  --ASSUME_SORT_ORDER queryname \
-  --USE_JDK_DEFLATER TRUE \
-  --USE_JDK_INFLATER TRUE \
-  --DUPLICATE_SCORING_STRATEGY=SUM_OF_BASE_QUALITIES
+	--METRICS_FILE "${wd}/${prefix}.merged.dedup.log" \
+	--REMOVE_DUPLICATES TRUE \
+	--ASSUME_SORT_ORDER queryname \
+	--USE_JDK_DEFLATER TRUE \
+	--USE_JDK_INFLATER TRUE \
+	--DUPLICATE_SCORING_STRATEGY=SUM_OF_BASE_QUALITIES
 
 # sort deduplicated merged file ------------------------------------------------
 java -Xmx8g -Dpicard.useLegacyParser=FALSE \
 	-jar ${picard} SortSam \
-  --INPUT "${wd}/${prefix}.merged.dedup.bam" \
-  --OUTPUT "${wd}/${prefix}.merged.dedup.sorted.bam" \
+	--INPUT "${wd}/${prefix}.merged.dedup.bam" \
+	--OUTPUT "${wd}/${prefix}.merged.dedup.sorted.bam" \
 	--VERBOSITY ERROR \
 	--QUIET TRUE \
-  --SORT_ORDER coordinate \
-  --USE_JDK_DEFLATER TRUE \
-  --USE_JDK_INFLATER TRUE \
-  --CREATE_INDEX TRUE
+	--SORT_ORDER coordinate \
+	--USE_JDK_DEFLATER TRUE \
+	--USE_JDK_INFLATER TRUE \
+	--CREATE_INDEX TRUE
 
 # read count for report --------------------------------------------------------
 count_mapped_proper=$( samtools view -@ "${threads}" -f 67 "${wd}/${prefix}.merged.bam" | wc -l )
@@ -778,19 +778,19 @@ awk -v OFS="\t" '
 
 # extract methylation for ref L1 -----------------------------------------------
 bismark_methylation_extractor \
---paired-end \
---comprehensive \
---merge_non_CpG \
---no_overlap \
---multicore "${bs_parallel}" \
---mbias_off \
---no_header \
---output "${wd}" \
---bedGraph \
---zero_based \
---cutoff "${read_threshold}" \
---buffer_size 50% \
-"${wd}/${prefix}.refL1.dedup.name_sorted.bam" \
+	--paired-end \
+	--comprehensive \
+	--merge_non_CpG \
+	--no_overlap \
+	--multicore "${bs_parallel}" \
+	--mbias_off \
+	--no_header \
+	--output "${wd}" \
+	--bedGraph \
+	--zero_based \
+	--cutoff "${read_threshold}" \
+	--buffer_size 50% \
+	"${wd}/${prefix}.refL1.dedup.name_sorted.bam" \
 &> /dev/null
 
 
@@ -831,8 +831,8 @@ bedtools intersect -s -wa -wb \
 
 while read aline;
 do
-	cluster=$( echo -ne "${aline}" | awk '{print $9}' ); \
-	echo -e "${aline}" \
+  cluster=$( echo -ne "${aline}" | awk '{print $9}' ); \
+  echo -e "${aline}" \
   | awk '{print $4}' \
   | awk -F "," '{gsub("/1",""); OFS="\n"; $NF=$NF; print $0}' \
   > "${wd}/tmp/${cluster}.reads" ; \
@@ -864,19 +864,19 @@ read_extraction(){
 
 	file_name="$( basename "${file}" .reads )"
 
-  # extract aligned reads on L1HS corresponding to each cluster ----------------
-  java -Dpicard.useLegacyParser=FALSE \
-		-jar "${picard}" FilterSamReads \
-    --INPUT "${wd}/${prefix}.R2toL1HS.reformated.bam" \
-    --OUTPUT "${wd}/tmp/${file_name}.bam" \
-		--VERBOSITY ERROR \
-		--QUIET TRUE \
-    --READ_LIST_FILE "${wd}/tmp/${file_name}.reads" \
-    --FILTER includeReadList \
-    --WRITE_READS_FILES FALSE \
-		--USE_JDK_DEFLATER TRUE \
-	  --USE_JDK_INFLATER TRUE \
-    --SORT_ORDER coordinate
+# extract aligned reads on L1HS corresponding to each cluster ----------------
+java -Dpicard.useLegacyParser=FALSE \
+	-jar "${picard}" FilterSamReads \
+	--INPUT "${wd}/${prefix}.R2toL1HS.reformated.bam" \
+	--OUTPUT "${wd}/tmp/${file_name}.bam" \
+	--VERBOSITY ERROR \
+	--QUIET TRUE \
+	--READ_LIST_FILE "${wd}/tmp/${file_name}.reads" \
+	--FILTER includeReadList \
+	--WRITE_READS_FILES FALSE \
+	--USE_JDK_DEFLATER TRUE \
+	--USE_JDK_INFLATER TRUE \
+	--SORT_ORDER coordinate
 
   # reformat bam file (append cluster coordinates to read names) ---------------
   samtools view -h "${wd}/tmp/${file_name}.bam" \
@@ -915,12 +915,12 @@ bismark_methylation_extractor \
   --mbias_off \
   --no_header \
   --output "${wd}" \
-	--bedGraph \
-	--zero_based \
-	--cutoff "${read_threshold}" \
-	--buffer_size 50% \
+  --bedGraph \
+  --zero_based \
+  --cutoff "${read_threshold}" \
+  --buffer_size 50% \
   "${wd}/${prefix}.R2toL1HS.nonref-L1HS.filtered.bam" \
-	&> /dev/null
+&> /dev/null
 
 # reformat non-ref L1 bismark_methylation_extractor output to get insertion
 # coordinates ------------------------------------------------------------------
@@ -976,7 +976,7 @@ methpat \
   --html "${wd}/${prefix}.methpat_pooled-L1HS_CpG.html" \
   --webassets online \
   --title "${prefix} - L1HS family only" \
-	--min_cpg_percent 10 \
+  --min_cpg_percent 10 \
   "${wd}/CpG_context_${prefix}_pooled-L1.txt" \
 > "${wd}/${prefix}_methpat_pooled-L1HS_CpG.output"
 
@@ -987,7 +987,7 @@ methpat \
   --html "${wd}/${prefix}.methpat_pooled-L1_CpG.html" \
   --webassets online \
   --title "${prefix} - all called L1 families" \
-	--min_cpg_percent 10 \
+  --min_cpg_percent 10 \
   "${wd}/CpG_context_${prefix}_pooled-L1.txt" \
 > "${wd}/${prefix}_methpat_pooled-L1_CpG.output"
 
@@ -1038,13 +1038,13 @@ output=$( printf "%-3s- Generate bedGraph files for CpG upstream of called L1 lo
 log+="${output}"
 echo -ne "${output}"
 
-# 	- for refL1
+# - for refL1
 zcat "${wd}/${prefix}.refL1.dedup.name_sorted.bedGraph.gz" \
 | bedtools intersect -v -a - -b "${wd}/${prefix}.called-refL1.filtered.bed" \
 | gzip \
 > "${wd}/${prefix}.refL1.flank.bedGraph.gz"
 
-# 	- for non-refL1
+# - for non-refL1
 samtools view -b -f 73 "${wd}/${prefix}.merged.dedup.bam" \
 | bedtools intersect -s -a - -b "${wd}/${prefix}.non-refL1.SE-clusters.filtered.bed" \
 | samtools view -h \
@@ -1067,10 +1067,10 @@ bismark_methylation_extractor \
   --mbias_off \
   --no_header \
   --output "${wd}" \
-	--bedGraph \
-	--zero_based \
-	--cutoff "${read_threshold}" \
-	--buffer_size 50% \
+  --bedGraph \
+  --zero_based \
+  --cutoff "${read_threshold}" \
+  --buffer_size 50% \
 "${wd}/${prefix}.non-refL1.flank.bam" \
 &> /dev/null
 
@@ -1081,14 +1081,14 @@ then
 	> "${wd}/${prefix}.non-refL1.flank.bedGraph.gz"
 fi
 
-#		- merge flanking met of flanking sequence for ref and non-ref L1
+# - merge flanking met of flanking sequence for ref and non-ref L1
 zcat "${wd}/${prefix}.refL1.flank.bedGraph.gz" "${wd}/${prefix}.non-refL1.flank.bedGraph.gz" \
 | sort -k1,1 -k2,2n \
 | awk 'BEGIN {print "track type=bedGraph"} ($1!~/^track/) {print}' \
 | gzip \
 > "${wd}/${prefix}.pooled-L1.flank.bedGraph.gz"
 
-#		- merge all bedgraph files for both ref and non-ref L1, internal and flanks
+# - merge all bedgraph files for both ref and non-ref L1, internal and flanks
 zcat "${wd}/${prefix}.refL1.dedup.name_sorted.bedGraph.gz" \
 | bedtools intersect -a - -b "${wd}/${prefix}.called-refL1.filtered.bed" \
 | sort -k1,1 -k2,2n \
