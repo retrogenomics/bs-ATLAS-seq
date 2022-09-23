@@ -4,17 +4,6 @@
 # L1 and methylation calling for bs-atlas-seq experiments                      #
 ################################################################################
 
-# dependencies -----------------------------------------------------------------
-#   - cutadapt 3.1 (python 3.8)
-#   - bowtie2 2.4.1
-#   - bismark 0.22.1
-#   - samtools 1.3
-#   - picard tools
-#   - bedtools 2.29.2
-#   - methpat 2.1.0 (python 2.7)
-#   - seqtk 1.3-r115-dirty
-#   - GNU parallel 20200922
-
 ###### load preferences and define global settings #############################
 script_name="bs-atlas-seq_calling"
 script_version='1.2.1'
