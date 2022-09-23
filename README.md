@@ -167,6 +167,7 @@ L1 with methylation call	3877
 -- including nonref L1HS	21
 ```
 - `.L1HS.hg38.bed` file
+
 |chr|start|end|name|mCG_frac|strand|family|ref|read_count|mCG_count|CG_count|ME|closest_gene|
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 |chr1|34566055|34572105|chr1:34566055-34572105:-:L1HS:REF:98:14|0.766667|-|L1HS|REF|14|138|180|0.247489|.|
@@ -191,3 +192,8 @@ L1 with methylation call	3877
 	
 - `.L1HS.hg38.html` file (can be opened with a web browser)
 
+<img
+  src="pictures/screenshot.L1HS.hg38.html.png"
+  alt="Screenshot for the .L1HS.hg38.html file"
+  title="Screenshot for the .L1HS.hg38.html file"
+  style="display: block; margin: 0 auto; width: 300px">
