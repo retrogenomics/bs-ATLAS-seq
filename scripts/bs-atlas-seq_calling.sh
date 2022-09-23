@@ -184,7 +184,7 @@ cutadapt \
   --discard-untrimmed \
   --action=none \
   --quiet \
-  -G L1_target_rc="^AAAAACTCCCTAACCCCTTA;e=0.15;o=5" \
+  -G L1_target_rc="^AAAAACTCCCTAACCCCTTA;e=0.15" \
   -o "${wd}/${prefix}_R1.trimmed.fastq.gz" \
   -p "${wd}/${prefix}_R2.trimmed.fastq.gz" \
   "${R1}" \
