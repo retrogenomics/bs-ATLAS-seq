@@ -6,6 +6,8 @@ Script to call L1 insertions and their methylation levels in bs-ATLAS-seq experi
 
 ### Dependencies
 Make sure to include the path to these programs in your `$PATH` variable by editing the appropriate file depending on your system (it could be ~/.bash_profile, ~/.bashrc, or ~/.profile)
+- [bash](https://tiswww.case.edu/php/chet/bash/bashtop.html) (tested with v4.2 and above, requires associated arrays)
+- [GNU coreutils](https://www.gnu.org/software/coreutils) (tested with v9.1)
 - [cutadapt](https://github.com/marcelm/cutadapt) (tested with v3.1)
 - [bowtie2](http://bowtie-bio.sourceforge.net/bowtie2/index.shtml) (tested with v2.4.1)
 - [bismark](https://github.com/FelixKrueger/Bismark) (version >= 0.22.0 which supports soft-clipping, tested with v0.22.1)
@@ -42,6 +44,9 @@ Note that this can take several hours.
 bismark_genome_preparation --verbose bs/references/hg38/
 ```
 6. Edit the `config_dir.sh` file in the `bs-ATLAS-seq/` folder according to your configuration
+
+### Note
+We provide annotation files (genes, reference L1s, ENCODE black-list) for hg38. If you want to use another assembly, you can use the [LiftOver](https://genome.ucsc.edu/cgi-bin/hgLiftOver) tool to convert coordinates in your favorite assembly. 
 
 ## Usage
 ```
