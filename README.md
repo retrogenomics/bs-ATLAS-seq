@@ -35,9 +35,9 @@ gunzip bs/references/hg38/hg38.fa.gz
 ```
 gunzip bs/annotations/hg38_rmsk_L1_repPercent.bed.gz
 ```
-5. Prepare Bismark genomes:
+5. Prepare Bismark human reference genome:
+Note that this can take several hours.
 ```
-bismark_genome_preparation --verbose bs/references/L1/
 bismark_genome_preparation --verbose bs/references/hg38/
 ```
 6. Edit the `config_dir.sh` file in the `bs-ATLAS-seq/` folder according to your configuration
@@ -57,4 +57,33 @@ options:
 	-d Configuration file [default=./config_dir.sh]
 ```
 Example:
+The output directory will be `~/Downloads/test_220923` and output files will all be prefixed with `test_IMR90.`. Here we use the subsampling `-u` option to use only 1% of the reads for testing purposes.
 ```
+./bs/scripts/bs-atlas-seq_calling.sh \
+	-1 ~/Lab/bioinfo/data/bs-atlas-seq/180525_NB501350_0027_AH37TJBGX7/IMR90_S6_R1.fastq.gz \
+	-2 ~/Lab/bioinfo/data/bs-atlas-seq/180525_NB501350_0027_AH37TJBGX7/IMR90_S6_R2.fastq.gz \
+	-o ~/Downloads/test_220923 \
+	-p test_IMR90 \
+	-n 3 -s 1 -t 6 -u 0.01 \
+	-d ~/Downloads/bs/config_dir.sh
+```
+## Output
+The pipeline generates a number of files which are described below:
+| File name | Description |
+|---|---|
+|`<PREFIX>.bs-atlas-seq_calling.sh.script.sh`|A copy of the script used to generate the data.|
+|`<PREFIX>.stats.txt`|A summary file with the number of reads, processed at each step, and the number of L1 detected.|
+|`<PREFIX>.log`|A log file with the information displayed on the screen while the script is running.|
+|`<PREFIX>.hg38.bam`|Alignment of the reads to the reference genome provided.|
+|`<PREFIX>.hg38.bai`|Index file of the `.bam` file.|
+|`<PREFIX>.all_L1.flanks_and_internal.hg38.bedGraph.gz`|BedGraph file with mCG levels.|
+|`<PREFIX>.all_L1.hg38.bed`|Bed file containing all called L1 as well as their average mCG level as score (5th column).|
+|`<PREFIX>.L1HS.hg38.bed`|Similar to `<PREFIX>.all_L1.hg38.bed` but filtered to keep only L1HS elements.|
+|`<PREFIX>.all_L1.hg38.html`|An `.html` file displaying the single-molecule profiles of methylation for each L1 locus identified. Can be opened with a web browser (tested with Chrome).|
+|`<PREFIX>.L1HS.hg38.html`|Similar to `<PREFIX>.all_L1.hg38.html` but filtered to keep only L1HS elements.|
+
+ 
+
+
+
+
