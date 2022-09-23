@@ -31,13 +31,16 @@ mkdir -p bs/references/hg38
 wget 'ftp://hgdownload.cse.ucsc.edu/goldenPath/hg38/bigZips/hg38.fa.gz' -O bs/references/hg38/hg38.fa.gz
 gunzip bs/references/hg38/hg38.fa.gz
 ```
-3. Prepare Bismark genomes and indexes:
-Note that human genome preparation can take several hours.
+4. Prepare repeatmasker file:
+```
+gunzip bs/annotations/hg38_rmsk_L1_repPercent.bed.gz
+```
+5. Prepare Bismark genomes:
 ```
 bismark_genome_preparation --verbose bs/references/L1/
 bismark_genome_preparation --verbose bs/references/hg38/
 ```
-4. Edit the `config_dir.sh` file in the `bs-ATLAS-seq/` folder according to your configuration
+6. Edit the `config_dir.sh` file in the `bs-ATLAS-seq/` folder according to your configuration
 
 ## How to use?
 ```
@@ -52,4 +55,6 @@ options:
 	-t Number of threads used for mapping [default=4]
 	-c Activate cleanup (deletion of temporary files) [default=off]
 	-d Configuration file [default=./config_dir.sh]
+```
+Example:
 ```
