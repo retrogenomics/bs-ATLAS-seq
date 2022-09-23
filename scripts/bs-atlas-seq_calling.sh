@@ -17,7 +17,7 @@
 
 ###### load preferences and define global settings #############################
 script_name="bs-atlas-seq_calling"
-script_version='1.2.0'
+script_version='1.2.1'
 
 start_time=$( date +%s )
 day=$(date +"[%d-%m-%Y] [%T]")
