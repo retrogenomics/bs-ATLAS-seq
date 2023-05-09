@@ -4,8 +4,9 @@ Script to call L1 insertions and their methylation levels in bs-ATLAS-seq experi
 
 ## Citing bs-ATLAS-seq scripts
 If you use this script in your work, please cite:
-> Lanciano, S, *et al.* (2022). Resolving the heterogeneity of L1 DNA methylation reveals widespread epivariation and interplay between L1s and their integration site.
-> *bioRxiv*, 2022.XXX; [doi:XXX]
+> Lanciano, S, *et al.* (2023). Comprehensive locus-specific L1 DNA methylation profiling reveals the epigenetic and transcriptional interplay between L1s and their integration sites.
+> *bioRxiv*, 2023.01.03.522582; doi: https://doi.org/10.1101/2023.01.03.522582 <br>
+> [[abstract]](https://www.biorxiv.org/content/10.1101/2023.01.03.522582v2) [[full text]](https://www.biorxiv.org/content/10.1101/2023.01.03.522582v2.full)
 
 ## Installation
 
