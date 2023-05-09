@@ -189,7 +189,7 @@ L1 with methylation call	3877
 |chr|chromosome|
 |start|start coordinate|
 |end|end coordinate|
-|name|name of the L1 insertion built as chr:start-end:strand:<zero-width space>family:ref:L1 length (% consensus):read_count \[, softclipped read count, split read count for NONREF insertions\]|
+|name|name of the L1 insertion built as chr:start-end:strand:&#8203;family:ref:L1 length (% consensus):read_count \[, softclipped read count, split read count for NONREF insertions\]|
 |mCG_frac|average L1 DNA methylation. $mCG_{frac} = {{mCG_{count}} \over {CG_{count}}}$|
 |strand|L1 orientation|
 |family|L1 family (e.g. L1HS, L1PA2, L1PA3, etc)|
